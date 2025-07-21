@@ -1,0 +1,15 @@
+../Core/Src/main.c:93:19:ESP_SendCmd	5
+../Core/Src/main.c:125:6:ESP_ReadResponse	1
+../Core/Src/main.c:134:6:ESP_BT_ConnectToDevice	1
+../Core/Src/main.c:144:6:ESP_BT_StartScan	1
+../Core/Src/main.c:152:6:ESP32_Bluetooth_Init	1
+../Core/Src/main.c:220:6:ESP_SetBaudRate_115200	1
+../Core/Src/main.c:244:5:main	1
+../Core/Src/main.c:313:6:SystemClock_Config	4
+../Core/Src/main.c:370:13:MX_ETH_Init	2
+../Core/Src/main.c:419:13:MX_I2C1_Init	4
+../Core/Src/main.c:467:13:MX_USART3_UART_Init	2
+../Core/Src/main.c:502:13:MX_USART6_UART_Init	2
+../Core/Src/main.c:537:13:MX_USB_OTG_FS_PCD_Init	2
+../Core/Src/main.c:572:13:MX_GPIO_Init	1
+../Core/Src/main.c:632:6:Error_Handler	1

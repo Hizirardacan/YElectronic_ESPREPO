@@ -1,0 +1,4 @@
+../Core/Src/main.c:64:19:ESP_SendCmd	5
+../Core/Src/main.c:104:5:main	5
+../Core/Src/main.c:195:6:SystemClock_Config	3
+../Core/Src/main.c:248:6:Error_Handler	1
