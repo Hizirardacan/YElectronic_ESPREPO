@@ -147,11 +147,11 @@ void ESP_BT_ConnectToDevice(const char* mac_address)
     ESP_ReadResponse();
 }
 
-// ESP32 Bluetooth scan başlatma
+// ESP32 Bluetooth scan Start
 void ESP_BT_StartScan(void)
 {
     ESP_SendCmd("AT+BTSCAN=1,5\r\n", 3000);  // 1 = Inquiry scan, 1 = enable
-    ESP_ReadResponse(); // tarama sonucu gelen cihazlar burada listelenir
+    ESP_ReadResponse(); // Return Results
 }
 
 
@@ -171,8 +171,7 @@ void ESP32_Bluetooth_Init(void)
 	    ESP_ReadResponse();*/
 
 
-	    // <---------- If you configure first time run this part otherwise NOT NEEDED------>
-	    // 2) Init BT
+	    	    // 2) Init BT
 
     	ESP_SendCmd("AT+BTINIT=1\r\n", 500);
     	ESP_ReadResponse();
@@ -189,12 +188,17 @@ void ESP32_Bluetooth_Init(void)
 	   	ESP_SendCmd("AT+BTSCANMODE=2\r\n", 500);
 	   	ESP_ReadResponse();
 
-	    //Spp Config SPP CONFIG ICIN ONCE 0 SORNA 1 YA DA 2 YAP KAPATMADAN CONFIG OLMUYOR
+	   	// 4) SPP Configuration Sequence:
+	   	// You must first disable SPP by setting it to 0,
+	   	// then enable it with value 1 or 2.
+	   	// Configuration is not accepted unless disabled first.
+
 	    ESP_SendCmd("AT+BTSPPINIT?\r\n", 500);
 	    ESP_ReadResponse();
 
 	    ESP_SendCmd("AT+BTSPPINIT=0\r\n", 500);
 	    ESP_ReadResponse();
+
 	    //4) Configure a classic-SPP service
 	    ESP_SendCmd("AT+BTSPPINIT=2\r\n", 500);
 	    ESP_ReadResponse();
@@ -210,7 +214,8 @@ void ESP32_Bluetooth_Init(void)
 	    //Start SPP
 	    ESP_SendCmd("AT+BTSPPSTART\r\n", 2000);
 	    ESP_ReadResponse();
-
+		
+		//Write your MAC ID For SPP
 	    ESP_SendCmd("AT+BTSPPCONN=0,0,\"00:00:00:00:00:00\"\r\n",3000);
 	    ESP_ReadResponse();
 
@@ -218,16 +223,6 @@ void ESP32_Bluetooth_Init(void)
 		ESP_SendCmd("AT+BTSPPCONN?\r\n", 2000);
 	    ESP_ReadResponse();
 
-
-
-
-
-
-
-
-
-
-	    // Now the module is advertising as “ESP32_Bluetooth”*/
 
 }
 
@@ -296,7 +291,7 @@ int main(void)
     // Initialize Bluetooth over UART6 (ESP32 AT commands)
     ESP32_Bluetooth_Init();
 
-    // Cihazları tara
+    // Device Scan
     ESP_BT_StartScan();
 
     // Later you can add connection command with AT+BTSPPCONN=MAC  ESP_BT_ConnectToDevice("00:11:22:33:44:55");
@@ -318,7 +313,7 @@ int main(void)
 
          /* 3) Set Wi-Fi to AP+STA mode (3) -----------------------------------------*/
          ESP_SendCmd("AT+CWMODE=3\r\n", AT_RX_TIMEOUT);
-         ESP_SendCmd("AT+CWSAP=\"Ozgun\",\"123456789\",6,3,4,0\r\n", AT_RX_TIMEOUT);
+         ESP_SendCmd("AT+CWSAP=\"Name\",\"123456789\",6,3,4,0\r\n", AT_RX_TIMEOUT);
 
          /* 5) Enable multiple connections -----------------------------------------*/
          ESP_SendCmd("AT+CIPMUX=1\r\n", AT_RX_TIMEOUT);
@@ -347,15 +342,15 @@ int main(void)
 
              if (uartLen > 0) {
 
-                 // Bluetooth verisi: +BTDATA:<len>,<data>
+                 // Bluetooth Data: +BTDATA:<len>,<data>
                  if (strstr(uartBuf, "+BTDATA:") != NULL) {
-                     // Verinin ',' sonrasını al
+                     // Get the part after the ','
                      char* dataStart = strchr(uartBuf, ',');
                      if (dataStart) {
                          dataStart++; // ',' sonrası verinin başlangıcı
                          size_t len = strlen(dataStart);
 
-                         // Echo Bluetooth verisi
+                         // Echo Bluetooth data
                          char cmd[64];
                          sprintf(cmd, "AT+BTSPPSEND=0,%u\r\n", (unsigned)len);
                          HAL_UART_Transmit(&huart6, (uint8_t*)cmd, strlen(cmd), HAL_MAX_DELAY);
@@ -365,14 +360,14 @@ int main(void)
                      }
                  }
 
-                 // Wi-Fi TCP verisi: +IPD,<id>,<len>:<data>
+                 // Wi-Fi TCP data: +IPD,<id>,<len>:<data>
                  else if (strstr(uartBuf, "+IPD") != NULL) {
                      char* dataStart = strchr(uartBuf, ':');
                      if (dataStart != NULL) {
                          dataStart++;
                          size_t dataLen = strlen(dataStart);
 
-                         // Echo Wi-Fi verisi
+                         // Echo Wi-Fi data
                          char cmdBuf[64];
                          sprintf(cmdBuf, "AT+CIPSEND=0,%u\r\n", (unsigned)dataLen);
                          HAL_UART_Transmit(&huart6, (uint8_t*)cmdBuf, strlen(cmdBuf), HAL_MAX_DELAY);

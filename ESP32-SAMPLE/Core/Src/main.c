@@ -144,7 +144,7 @@ int main(void)
 
      /* 3) Set Wi-Fi to AP+STA mode (3) -----------------------------------------*/
      ESP_SendCmd("AT+CWMODE=3\r\n", AT_RX_TIMEOUT);
-     ESP_SendCmd("AT+CWSAP=\"Ozgun\",\"123456789\",6,3,4,0\r\n", AT_RX_TIMEOUT);
+     ESP_SendCmd("AT+CWSAP=\"name\",\"123456789\",6,3,4,0\r\n", AT_RX_TIMEOUT);
 
      /* 5) Enable multiple connections -----------------------------------------*/
      ESP_SendCmd("AT+CIPMUX=1\r\n", AT_RX_TIMEOUT);

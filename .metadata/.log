@@ -1,0 +1,18 @@
+!SESSION 2025-08-01 14:37:33.033 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=tr_TR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data E:\YElectronic\YElectronic_ESPREPO\YElectronic_ESPREPO
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-08-01 14:37:36.930
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-08-01 14:37:36.930
+!MESSAGE Log4j2 initialized with config file E:\YElectronic\YElectronic_ESPREPO\YElectronic_ESPREPO\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-08-01 14:37:39.184
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-08-01 14:38:10.147
+!MESSAGE Indexed 'ESP32_Bluetooth' (26 sources, 118 headers) in 3.14 sec: 12,406 declarations; 66,769 references; 2 unresolved inclusions; 42 syntax errors; 147 unresolved names (0.19%)

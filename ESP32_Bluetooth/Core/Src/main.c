@@ -140,11 +140,11 @@ void ESP_BT_ConnectToDevice(const char* mac_address)
     ESP_ReadResponse();
 }
 
-// ESP32 Bluetooth scan başlatma
+// ESP32 Bluetooth scan Start
 void ESP_BT_StartScan(void)
 {
     ESP_SendCmd("AT+BTSCAN=1,5\r\n", 3000);  // 1 = Inquiry scan, 1 = enable
-    ESP_ReadResponse(); // tarama sonucu gelen cihazlar burada listelenir
+    ESP_ReadResponse(); // Return Scan Results
 }
 
 
@@ -210,10 +210,6 @@ void ESP32_Bluetooth_Init(void)
 
 
 
-
-
-
-	    // Now the module is advertising as “ESP32_Bluetooth”*/
 
 }
 
